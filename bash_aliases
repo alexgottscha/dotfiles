@@ -2,8 +2,11 @@
 
 alias units=gunits
 alias sed=gsed
-alias ls='exa --git'
+alias ls='ls -F --color'
 alias less='bat --theme=Coldark-Dark -p'
+alias ly='less -l yaml'
+alias lj='less -l json'
+alias cat='bat -P'
 alias vi='nvim'
 alias vim='nvim'
 alias jqp='jq -C | less -R' # color pager

@@ -5,11 +5,7 @@
 umask 0022
 
 # update PATH before checking for an interactive shell
-export PATH=/opt/homebrew/opt/gnu-getopt/bin:/opt/homebrew/bin:/bin:/sbin:/usr/bin:/usr/sbin:$HOME/.local/bin:$HOME/Library/pnpm:$HOME/.krew/bin:$PATH
-export PAGER="less -R"
-export EDITOR=nvim
-export SYSTEMD_PAGER='less -r'
-
+export PATH=/opt/homebrew/bin::$PATH
 
 # If not running interactively, don't do anything
 case $- in
