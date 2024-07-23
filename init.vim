@@ -16,12 +16,9 @@ Plug 'fatih/vim-go', {'do': ':GoUpdateBinaries'}
 Plug 'godlygeek/tabular'
 Plug 'hashivim/vim-terraform'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
-Plug 'martinda/Jenkinsfile-vim-syntax'
-Plug 'modille/groovy.vim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/playground'
 Plug 'obreitwi/vim-sort-folds'
-Plug 'pangloss/vim-javascript'
 Plug 'pedrohdz/vim-yaml-folds'
 Plug 'stephpy/vim-yaml'
 

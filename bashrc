@@ -13,18 +13,24 @@ case $- in
       *) return;;
 esac
 
+export PATH=/opt/homebrew/opt/gnu-getopt/bin:/sbin:/usr/sbin:$HOME/.local/bin:$PATH
+export PAGER="less -R"
+export EDITOR=nvim
+export SYSTEMD_PAGER='less -r'
 export HISTTIMEFORMAT="%D %T "
 
 # stupidly fun prompt
 fg_default='\e[39m'; fg_black='\e[30m'; fg_red='\e[31m'; fg_green='\e[32m'; fg_yellow='\e[33m'; fg_blue='\e[34m'; fg_magenta='\e[35m'; fg_cyan='\e[36m'; fg_light_gray='\e[37m'; fg_dark_gray='\e[90m'; fg_light_red='\e[91m'; fg_light_green='\e[92m'; fg_light_yellow='\e[93m'; fg_light_blue='\e[94m'; fg_light_magenta='\e[95m'; fg_light_cyan='\e[96m'; fg_white='\e[97m'; bg_default='\e[49m'; bg_black='\e[40m'; bg_red='\e[41m'; bg_green='\e[42m'; bg_yellow='\e[43m'; bg_blue='\e[44m'; bg_magenta='\e[45m'; bg_cyan='\e[46m'; bg_light_gray='\e[47m'; bg_dark_gray='\e[100m'; bg_light_red='\e[101m'; bg_light_green='\e[102m'; bg_light_yellow='\e[103m'; bg_light_blue='\e[104m'; bg_light_magenta='\e[105m'; bg_light_cyan='\e[106m'; bg_white='\e[107m'
 
 function __prompt_command {
-	local rc="$?"
+  local rc="$?"
 
-	git_branch=$(git branch 2> /dev/null | \
-		sed -e '/^[^*]/d' -e 's/^\* //')
-  kube_context="$(kubectl config current-context 2> /dev/null)"
-  kube_ns="$(kubectl config get-contexts 2> /dev/null | grep '^*' | awk '{print $NF}')"
+  git_branch=$(git branch 2> /dev/null | \
+    sed -e '/^[^*]/d' -e 's/^\* //')
+# kube_context="$(oq -i yaml -r '."current-context"' .kube/config)"
+# faster
+  kube_context="$(gsed -nr 's/^current-context: (.*)/\1/p' ~/.kube/config)"
+  kube_ns=$(oq -i yaml -r '."current-context" as $cc | .contexts[] | select(.name == $cc) | .context.namespace' ~/.kube/config)
 
   case $rc in
     0) rc_emo="😃";;
@@ -52,7 +58,7 @@ function __prompt_command {
       fi;;
   esac
 
-        PS1=$(printf "$rc_emo\n\n$fg_light_green$USER@$HOSTNAME$fg_light_gray:$fg_light_cyan\w $fg_light_red$git_branch$fg_light_yellow $kube_context/$kube_ns$fg_default\n\\$ ")
+  PS1=$(printf "$rc_emo\n\n$fg_light_cyan\w $fg_light_red$git_branch$fg_light_yellow $kube_context/$kube_ns$fg_default\n\\$ ")
 }
 
 PROMPT_COMMAND=__prompt_command
