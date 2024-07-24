@@ -58,4 +58,9 @@ else
     let &t_SI = "\e[5 q"
     let &t_EI = "\e[2 q"
 endif
+
+" line numbers
 set number
+
+" mouse for pane resizing only
+set mouse=r
